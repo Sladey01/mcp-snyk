@@ -1,0 +1,28 @@
+{
+  "name": "mcp-snyk",
+  "version": "1.0.0",
+  "description": "A standalone Snyk server for Model Context Protocol (MCP)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mcp-snyk": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.1.0",
+    "node-fetch": "^2.6.7",
+    "zod": "^3.22.4",
+    "zod-to-json-schema": "^3.22.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/node-fetch": "^2.6.9",
+    "typescript": "^4.4.4"
+  },
+  "files": ["dist"],
+  "keywords": ["mcp", "snyk", "security"],
+  "license": "MIT"
+}
