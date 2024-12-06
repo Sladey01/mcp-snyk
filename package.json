@@ -1,40 +1,24 @@
 {
-  "name": "@sladey01/mcp-snyk",
+  "name": "@sladey01/mcp-server-snyk",
   "version": "1.0.0",
-  "description": "A standalone Snyk server for Model Context Protocol (MCP)",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "mcp-snyk": "dist/index.js"
+    "mcp-server-snyk": "dist/index.js"
   },
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
-    "start": "node dist/index.js"
+    "build": "tsc && chmod +x dist/*.js",
+    "prepare": "npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.3",
-    "node-fetch": "^2.6.7",
-    "tsx": "^4.19.2",
+    "@modelcontextprotocol/sdk": "1.0.1",
+    "node-fetch": "^3.3.2",
     "zod": "^3.22.4",
-    "zod-to-json-schema": "^3.22.3"
+    "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
-    "@types/node": "^16.11.6",
-    "@types/node-fetch": "^2.6.9",
-    "typescript": "^4.4.4"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "mcp",
-    "snyk",
-    "security"
-  ],
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+    "@types/node": "^20.11.0",
+    "@types/node-fetch": "^2.6.12",
+    "typescript": "^5.6.2"
   }
 }
