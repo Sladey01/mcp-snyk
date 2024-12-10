@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { Server } from '@modelcontextprotocol/sdk';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio';
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 
 const SNYK_API_KEY = process.env.SNYK_API_KEY;
@@ -20,6 +20,10 @@ const ScanProjectSchema = z.object({
   projectId: z.string().describe('Snyk project ID to scan')
 });
 
+// Define types based on schemas
+type ScanRepoParams = z.infer<typeof ScanRepoSchema>;
+type ScanProjectParams = z.infer<typeof ScanProjectSchema>;
+
 const server = new Server(
   { name: 'snyk-mcp-server', version: '1.0.0' },
   {
@@ -38,7 +42,7 @@ const server = new Server(
   }
 );
 
-server.methods.scan_repository = async ({ url, branch }) => {
+server.methods.scan_repository = async ({ url, branch }: ScanRepoParams) => {
   const response = await fetch(
     'https://snyk.io/api/v1/test',
     {
@@ -68,7 +72,7 @@ server.methods.scan_repository = async ({ url, branch }) => {
   };
 };
 
-server.methods.scan_project = async ({ projectId }) => {
+server.methods.scan_project = async ({ projectId }: ScanProjectParams) => {
   const response = await fetch(
     `https://snyk.io/api/v1/project/${projectId}/issues`,
     {
