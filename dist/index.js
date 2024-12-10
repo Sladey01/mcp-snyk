@@ -1,18 +1,10 @@
 #!/usr/bin/env node
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-import fetch from "node-fetch";
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
-const server = new Server({
-    name: "snyk-mcp-server",
-    version: "1.0.0",
-}, {
-    capabilities: {
-        tools: {}
-    }
-});
+import fetch from 'node-fetch';
 const SNYK_API_KEY = process.env.SNYK_API_KEY;
 if (!SNYK_API_KEY) {
     console.error("SNYK_API_KEY environment variable is not set");
@@ -25,6 +17,11 @@ const ScanRepoSchema = z.object({
 });
 const ScanProjectSchema = z.object({
     projectId: z.string().describe('Snyk project ID to scan')
+});
+const server = new Server({ name: 'snyk-mcp-server', version: '1.0.0' }, {
+    capabilities: {
+        tools: {}
+    }
 });
 server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
@@ -103,12 +100,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         throw error;
     }
 });
-async function runServer() {
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-    console.error("Snyk MCP Server running on stdio");
-}
-runServer().catch((error) => {
-    console.error("Fatal error in main():", error);
+const transport = new StdioServerTransport();
+server.connect(transport).catch((error) => {
+    console.error("Fatal error:", error);
     process.exit(1);
 });
+console.error('Snyk MCP Server running on stdio');
