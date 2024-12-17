@@ -2,6 +2,8 @@
 
 A standalone Model Context Protocol server for Snyk security scanning functionality.
 
+<a href="https://glama.ai/mcp/servers/nl2e6t2lpd"><img width="380" height="200" src="https://glama.ai/mcp/servers/nl2e6t2lpd/badge" alt="mcp-snyk MCP server" /></a>
+
 ## Configuration
 
 Update your Claude desktop config (`claude-config.json`):
